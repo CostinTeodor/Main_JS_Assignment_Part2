@@ -1,10 +1,8 @@
+// Declaring the result variable which will keep changing
+
 let resultTextElement = document.querySelector("#result");
 
-const addButton = document.querySelector("#addition");
-const substractButton = document.querySelector("#substraction");
-const multiplyButton = document.querySelector("#multiplication");
-const divideButton = document.querySelector("#division");
-
+// Prevent submitting the forms
 const allButtons = document.querySelectorAll("button");
 
 allButtons.forEach(element => {
@@ -12,102 +10,95 @@ allButtons.forEach(element => {
         event.preventDefault();
     })
 });
-
+// Declaring the operations buttons (+ - * / .)
 const operationsButtons = document.querySelectorAll(".operations-buttons");
-
-const screenElements = document.querySelectorAll(".screening-text");
-
+// Checking if any operation button are pressed with no number
+// ahead and correct it
 operationsButtons.forEach(element => {
     element.addEventListener("click", event => {
         if (resultTextElement.textContent == "")
             resultTextElement.textContent = "0";
     })
 });
-
+// Declaring the elements that Change the screen number
+// (not that delete)
+const screenElements = document.querySelectorAll(".screening-text");
+// Check if the screen elements are clicked
 screenElements.forEach(element => {
     element.addEventListener("click", event => {
+        // Check if the input number does not start with 0
+        // Also Check if the second to last input is a '.'
+        // so we can enter multiple 0's
         let secondToLast = resultTextElement.textContent[resultTextElement.textContent.length - 2];
         if (resultTextElement.textContent.endsWith("0") &&
             element.classList.contains("number-button") &&
-<<<<<<< HEAD
             isNaN(secondToLast) && secondToLast != ".")
             resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
-        if (resultTextElement.textContent.length >= 24) {
-            alert("Largest operation is 24 characters long!");
-=======
-            isNaN(secondToLast))
-            resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
-
-        if (resultTextElement.textContent.length >= 24) {
-            alert("Largest operation is 30 characters long!");
->>>>>>> e5c60a8c4f7868cd1accbeed9a0b1d02ed556c34
+        // Check if the length of the operation is not larger
+        // than the screen width
+        if (resultTextElement.textContent.length >= 17) {
+            alert("Largest operation is 17 characters long!");
             resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
         }
+        // Check if the input does not end in + - / * and 
+        // that the last input is one of the operation symbol
+        // so they don't stack
         if (checkEnding() &&
             element.classList.contains("operations-buttons"))
             resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
-        // if()
-            resultTextElement.textContent += element.textContent;
+        resultTextElement.textContent += element.textContent;
+       
     })
 });
-
+// Function to calculate the string using the built-in
+// eval function
 function calculate(string) {
     let result = eval(string);
+    // Make the result have only 2 decimals and convert it to 
+    // string
     result = "" + ((Math.round(result * 100) / 100).toFixed(2));
+    // Check if the result ends in '.00' and slice it so
+    // the result will not show it
     if (result.endsWith(".00"))
         result = result.slice(0, -3);
+    // Check if the result ends in 2 decimals, the last being
+    // a '0', so the result will not show it (e.g 4.10 -> 4.1)
     else if (result.endsWith("0") && result[result.length - 3] == ".")
         result = result.slice(0, -1);
     return result;
 }
-
+// Declare the equal button and call the appropriate function
 const equalButton = document.querySelector("#equal");
-
-equalButton.addEventListener("click", event => {
-    equalButtonFunction();
-});
-
+equalButton.addEventListener("click", equalButtonFunction);
+// Declare the clear button and call the appropriate function
 const clearButton = document.querySelector("#clear");
-
-clearButton.addEventListener("click", event => {
-    clearButtonFunction();
-});
-
+clearButton.addEventListener("click", clearButtonFunction);
+// Declare the backspace button and call the appropriate function
 const backspaceButton = document.querySelector("#backspace");
-
-backspaceButton.addEventListener("click", event => {
-    backspaceButtonFunction();
-});
-
+backspaceButton.addEventListener("click", backspaceButtonFunction);
+// Declare the float point button and call the appropriate function
 const floatPoint = document.querySelector("#float-point");
-
-floatPoint.addEventListener("click", event => {
-    floatPointFunction();
-});
-
+floatPoint.addEventListener("click", floatPointFunction);
+// Check if an item is included in an array
 function inArray(array, item) {
-    if (array.includes(item))
-        return true;
-    return false;
+    return array.includes(item);
 }
-
-let separators = ['+', '-', '/', '*', '.', 'Enter', 'Backspace', 'Escape'];
-
+// Declare a list of the NaN inputs allowed
+let separators = ['+', '-', '/', '*', '.', 'Enter', 'Backspace', 'Escape', ' '];
+// Check if a key is pressed
 document.body.addEventListener("keyup", event => {
-<<<<<<< HEAD
-    if (resultTextElement.textContent.length >= 30) {
-        alert("Largest operation is 30 characters long!");
-=======
-    if (resultTextElement.textContent.length >= 24) {
-        alert("Largest operation is 24 characters long!");
->>>>>>> e5c60a8c4f7868cd1accbeed9a0b1d02ed556c34
+    // Check if the length of the operation is not larger
+    // than the screen width
+    if (resultTextElement.textContent.length >= 17) {
+        alert("Largest operation is 17 characters long!");
         resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
     }
+    // Check if the input is a number or if it is included
+    // in the allowed inputs
     if (!isNaN(event.key) || separators.indexOf(event.key) != -1) {
+        // Check for each input case
         switch (event.key) {
             case ".":
-                if (resultTextElement.textContent == "")
-                    resultTextElement.textContent = "0";
                 floatPointFunction();
                 break;
             case "+":
@@ -116,7 +107,8 @@ document.body.addEventListener("keyup", event => {
             case "-":
                 if (resultTextElement.textContent == "")
                     resultTextElement.textContent = "0";
-                if (checkEnding() && isNaN(resultTextElement.textContent[resultTextElement.textContent.length - 1]))
+                if (checkEnding() && isNaN(resultTextElement.textContent[resultTextElement.textContent.length - 1]) ||
+                    resultTextElement.textContent.endsWith("."))
                     resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
                 resultTextElement.textContent += event.key;
                 break;
@@ -129,7 +121,16 @@ document.body.addEventListener("keyup", event => {
             case 'Escape':
                 clearButtonFunction();
                 break;
+            case ' ':
+                event.preventDefault();
+                break;
             default:
+                let secondToLast = resultTextElement.textContent[resultTextElement.textContent.length - 2];
+                let last = resultTextElement.textContent[resultTextElement.textContent.length - 1];
+                if (resultTextElement.textContent.endsWith("0") &&
+                    !isNaN(last) && last == '0' &&
+                    isNaN(secondToLast) && secondToLast != ".")
+                    resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
                 if (!isNaN(event.key))
                     resultTextElement.textContent += event.key;
                 break;
@@ -138,6 +139,11 @@ document.body.addEventListener("keyup", event => {
 });
 
 function floatPointFunction() {
+    if (resultTextElement.textContent == "" || checkEnding()) {
+        let inputArray = resultTextElement.textContent.split("");
+        inputArray.splice(inputArray.length, 0, "0");
+        resultTextElement.textContent = inputArray.join("");
+    }
     let numberArray = resultTextElement.textContent.split(/[+,-,*,/]/);
     let lastNumberString = numberArray[numberArray.length - 1];
     if (lastNumberString.includes("."))
