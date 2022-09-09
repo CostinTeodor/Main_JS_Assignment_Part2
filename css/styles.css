@@ -3,6 +3,12 @@
     src: url(../fonts/AlfaSlabOne-Regular.ttf);
 }
 
+/* Variables  */
+:root {
+    --white-shadow: 1px 1px white;
+    --buttons-padding: 25px 30px;
+}
+
 body {
     background-color: #86BBD8;
     color: #33658A;
@@ -11,7 +17,7 @@ body {
 
 header {
     text-align: center;
-    text-shadow: 1px 2px white;
+    text-shadow: var(--white-shadow);
 }
 
 main {
@@ -19,22 +25,22 @@ main {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
 }
 
 #wrapper {
     width: 300px;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
     border-radius: 20px;
     -webkit-box-shadow: 0 0 0 3px black;
-            box-shadow: 0 0 0 3px black;
+    box-shadow: 0 0 0 3px black;
 }
 
 #result-screen {
@@ -58,7 +64,7 @@ main {
 
 #advanced-operations>* {
     width: 25%;
-    padding: 25px 30px;
+    padding: var(--buttons-padding);
 }
 
 form {
@@ -72,18 +78,18 @@ form {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
+    flex-wrap: wrap;
     width: 75%;
     -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
 }
 
 #numbers>* {
-    padding: 25px 30px;
+    padding: var(--buttons-padding);
     -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
+    -ms-flex: 1;
+    flex: 1;
 }
 
 .screening-text,
@@ -112,31 +118,32 @@ form {
     display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
     width: 25%;
 }
 
 #operations>* {
     -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
+    -ms-flex: 1;
+    flex: 1;
 }
 
 #instructions {
     position: absolute;
     left: 3vw;
     top: 15vh;
-    text-shadow: 1px 1px white;
+    text-shadow: var(--white-shadow);
 }
 
-@media screen and (max-width: 1700px){
-    #instructions{
-        position:initial;
+@media screen and (max-width: 1700px) {
+    #instructions {
+        position: initial;
         display: block;
         text-align: center;
     }
-    body{
-        font-size: 1.7rem; 
+
+    body {
+        font-size: 1.7rem;
     }
 }

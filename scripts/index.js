@@ -1,10 +1,7 @@
 // Declaring the result variable which will keep changing
-
 let resultTextElement = document.querySelector("#result");
-
 // Prevent submitting the forms
 const allButtons = document.querySelectorAll("button");
-
 allButtons.forEach(element => {
     element.addEventListener("click", event => {
         event.preventDefault();
@@ -47,7 +44,7 @@ screenElements.forEach(element => {
             element.classList.contains("operations-buttons"))
             resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
         resultTextElement.textContent += element.textContent;
-       
+
     })
 });
 // Function to calculate the string using the built-in
