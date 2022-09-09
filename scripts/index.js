@@ -29,16 +29,25 @@ screenElements.forEach(element => {
         let secondToLast = resultTextElement.textContent[resultTextElement.textContent.length - 2];
         if (resultTextElement.textContent.endsWith("0") &&
             element.classList.contains("number-button") &&
+<<<<<<< HEAD
             isNaN(secondToLast) && secondToLast != ".")
             resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
         if (resultTextElement.textContent.length >= 24) {
             alert("Largest operation is 24 characters long!");
+=======
+            isNaN(secondToLast))
+            resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
+
+        if (resultTextElement.textContent.length >= 24) {
+            alert("Largest operation is 30 characters long!");
+>>>>>>> e5c60a8c4f7868cd1accbeed9a0b1d02ed556c34
             resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
         }
         if (checkEnding() &&
             element.classList.contains("operations-buttons"))
             resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
-        resultTextElement.textContent += element.textContent;
+        // if()
+            resultTextElement.textContent += element.textContent;
     })
 });
 
@@ -85,8 +94,13 @@ function inArray(array, item) {
 let separators = ['+', '-', '/', '*', '.', 'Enter', 'Backspace', 'Escape'];
 
 document.body.addEventListener("keyup", event => {
+<<<<<<< HEAD
     if (resultTextElement.textContent.length >= 30) {
         alert("Largest operation is 30 characters long!");
+=======
+    if (resultTextElement.textContent.length >= 24) {
+        alert("Largest operation is 24 characters long!");
+>>>>>>> e5c60a8c4f7868cd1accbeed9a0b1d02ed556c34
         resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
     }
     if (!isNaN(event.key) || separators.indexOf(event.key) != -1) {
