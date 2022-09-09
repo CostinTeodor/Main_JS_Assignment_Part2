@@ -42,7 +42,7 @@ main {
     width: calc(100%-2px);
     height: 70px;
     text-align: end;
-    font-size: 1.5em;
+    font-size: 1.5rem;
 }
 
 #result {
