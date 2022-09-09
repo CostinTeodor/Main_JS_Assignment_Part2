@@ -26,20 +26,31 @@ operationsButtons.forEach(element => {
 
 screenElements.forEach(element => {
     element.addEventListener("click", event => {
+        let secondToLast = resultTextElement.textContent[resultTextElement.textContent.length - 2];
+        if (resultTextElement.textContent.endsWith("0") &&
+            element.classList.contains("number-button") &&
+            isNaN(secondToLast))
+            resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
+
+        if (resultTextElement.textContent.length >= 24) {
+            alert("Largest operation is 30 characters long!");
+            resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
+        }
         if (checkEnding() &&
             element.classList.contains("operations-buttons"))
             resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
-        resultTextElement.textContent += element.textContent;
+        // if()
+            resultTextElement.textContent += element.textContent;
     })
 });
 
 function calculate(string) {
     let result = eval(string);
-    result = ""+((Math.round(result * 100) / 100).toFixed(2));
-    if(result.endsWith(".00"))
+    result = "" + ((Math.round(result * 100) / 100).toFixed(2));
+    if (result.endsWith(".00"))
         result = result.slice(0, -3);
-    else if(result.endsWith("0") && result[result.length-3] == ".")
-        result = result.slice(0,-1);
+    else if (result.endsWith("0") && result[result.length - 3] == ".")
+        result = result.slice(0, -1);
     return result;
 }
 
@@ -76,8 +87,8 @@ function inArray(array, item) {
 let separators = ['+', '-', '/', '*', '.', 'Enter', 'Backspace', 'Escape'];
 
 document.body.addEventListener("keyup", event => {
-    if(resultTextElement.textContent.length >=30){
-        alert("Largest operation is 30 characters long!");
+    if (resultTextElement.textContent.length >= 24) {
+        alert("Largest operation is 24 characters long!");
         resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
     }
     if (!isNaN(event.key) || separators.indexOf(event.key) != -1) {
@@ -117,7 +128,6 @@ document.body.addEventListener("keyup", event => {
 function floatPointFunction() {
     let numberArray = resultTextElement.textContent.split(/[+,-,*,/]/);
     let lastNumberString = numberArray[numberArray.length - 1];
-    console.log(lastNumberString);
     if (lastNumberString.includes("."))
         alert("There is no such number! Please correct it!");
     else
@@ -134,15 +144,23 @@ function checkEnding() {
 }
 
 function equalButtonFunction() {
-    if (resultTextElement.textContent.includes("/0") && !resultTextElement.textContent.includes("/0."))
+    let checkZeroPosition;
+    let ok = 1;
+    checkZeroPosition = resultTextElement.textContent.split("/0");
+    for (let i = 1; i < checkZeroPosition.length; i++) {
+        if (!checkZeroPosition[i].startsWith(".")) {
+            ok = 0;
+            break;
+        }
+    }
+    if (ok == 0)
         alert("You cannot divide by 0. Please retry!");
     else if (checkEnding())
         alert("You still have one operation left");
-    else{
-        
+    else {
         resultTextElement.textContent = calculate(resultTextElement.textContent);
-
-    }}
+    }
+}
 
 function backspaceButtonFunction() {
     resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
