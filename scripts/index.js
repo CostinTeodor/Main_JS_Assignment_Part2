@@ -1,3 +1,9 @@
+const addition = (x, y) => { return x + y };
+const substraction = (x, y) => { return x - y };
+const division = (x, y) => { return x / y };
+const multiplication = (x, y) => { return x * y };
+
+
 // Declaring the result variable which will keep changing
 let resultTextElement = document.querySelector("#result");
 // Prevent submitting the forms
@@ -50,7 +56,32 @@ screenElements.forEach(element => {
 // Function to calculate the string using the built-in
 // eval function
 function calculate(string) {
-    let result = eval(string);
+    let result = resultTextElement.textContent;
+    let symbolsString = resultTextElement.textContent.replace(/[0-9,.]/g, '');
+    let symbolsArray = symbolsString.split("");
+
+    let resultArray = result.split(/[+,\-,/,*]/);
+    let resultAsNumber = resultArray[0];
+    for (let i = 1; i < resultArray.length; i++) {
+        let firstNumber = resultArray[i];
+        console.log(resultAsNumber);
+        console.log(firstNumber);
+        switch (symbolsArray[i - 1]) {
+            case '+':
+                resultAsNumber = addition(resultAsNumber, firstNumber);
+                break;
+            case '-':
+                resultAsNumber = substraction(resultAsNumber, firstNumber);
+                break;
+            case '/':
+                resultAsNumber = division(resultAsNumber, firstNumber);
+                break;
+            case '*':
+                resultAsNumber = multiplication(resultAsNumber, firstNumber);
+                break;
+        }
+    }
+    result = +resultAsNumber;
     // Make the result have only 2 decimals and convert it to 
     // string
     result = "" + ((Math.round(result * 100) / 100).toFixed(2));
