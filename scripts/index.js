@@ -33,8 +33,8 @@ screenElements.forEach(element => {
             resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
         // Check if the length of the operation is not larger
         // than the screen width
-        if (resultTextElement.textContent.length >= 17) {
-            alert("Largest operation is 17 characters long!");
+        if (resultTextElement.textContent.length >= 16) {
+            alert("Largest operation is 16 characters long!");
             resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
         }
         // Check if the input does not end in + - / * and 
@@ -86,8 +86,8 @@ let separators = ['+', '-', '/', '*', '.', 'Enter', 'Backspace', 'Escape', ' '];
 document.body.addEventListener("keyup", event => {
     // Check if the length of the operation is not larger
     // than the screen width
-    if (resultTextElement.textContent.length >= 17) {
-        alert("Largest operation is 17 characters long!");
+    if (resultTextElement.textContent.length >= 16) {
+        alert("Largest operation is 16 characters long!");
         resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
     }
     // Check if the input is a number or if it is included
