@@ -84,7 +84,7 @@ function calculate(string) {
     result = +resultAsNumber;
     // Make the result have only 2 decimals and convert it to 
     // string
-    result = "" + ((Math.round(result * 100) / 100).toFixed(3));
+    result = "" + ((Math.round(result * 1000) / 1000).toFixed(3));
     // Check if the result ends in '.00' and slice it so
     // the result will not show it
     if (result.endsWith(".00"))
