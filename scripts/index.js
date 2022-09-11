@@ -41,7 +41,7 @@ screenElements.forEach(element => {
         // than the screen width
         if (resultTextElement.textContent.length >= 16) {
             alert("Largest operation is 16 characters long!");
-            resultTextElement.textContent = resultTextElement.textContent.slice(0, -2);
+            resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
         }
         // Check if the input does not end in + - / * and 
         // that the last input is one of the operation symbol
@@ -119,7 +119,7 @@ document.body.addEventListener("keyup", event => {
     // than the screen width
     if (resultTextElement.textContent.length >= 16) {
         alert("Largest operation is 16 characters long!");
-        resultTextElement.textContent = resultTextElement.textContent.slice(0, -2);
+        resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
     }
     // Check if the input is a number or if it is included
     // in the allowed inputs
@@ -172,7 +172,7 @@ function floatPointFunction() {
         inputArray.splice(inputArray.length, 0, "0");
         resultTextElement.textContent = inputArray.join("");
     }
-    let numberArray = resultTextElement.textContent.split(/[+,\-,*,/]/);
+    let numberArray = resultTextElement.textContent.split(/[+,-,*,/]/);
     let lastNumberString = numberArray[numberArray.length - 1];
     if (lastNumberString.includes("."))
         alert("There is no such number! Please correct it!");
