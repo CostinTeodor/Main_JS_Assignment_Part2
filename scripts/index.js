@@ -1,9 +1,8 @@
-const addition = (x, y) => { return x + y };
-const substraction = (x, y) => { return x - y };
-const division = (x, y) => { return x / y };
-const multiplication = (x, y) => { return x * y };
-
-
+// Declaring the operations
+const addition = (x, y) => { return x + y; }
+const substraction = (x, y) => { return x - y; }
+const division = (x, y) => { return x / y; }
+const multiplication = (x, y) => { return x * y; }
 // Declaring the result variable which will keep changing
 let resultTextElement = document.querySelector("#result");
 // Prevent submitting the forms
@@ -41,7 +40,7 @@ screenElements.forEach(element => {
         // than the screen width
         if (resultTextElement.textContent.length >= 16) {
             alert("Largest operation is 16 characters long!");
-            resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
+            resultTextElement.textContent = resultTextElement.textContent.slice(0, -2);
         }
         // Check if the input does not end in + - / * and 
         // that the last input is one of the operation symbol
@@ -53,35 +52,10 @@ screenElements.forEach(element => {
 
     })
 });
-// Function to calculate the string using the built-in
+// Function to calculate the string using the homemade
 // eval function
 function calculate() {
-    let result = resultTextElement.textContent;
-    let symbolsString = resultTextElement.textContent.replace(/[0-9,.]/g, '');
-    let symbolsArray = symbolsString.split("");
-
-    let resultArray = result.split(/[+,\-,/,*]/);
-    let resultAsNumber = resultArray[0];
-    for (let i = 1; i < resultArray.length; i++) {
-        let firstNumber = resultArray[i];
-        console.log(resultAsNumber);
-        console.log(firstNumber);
-        switch (symbolsArray[i - 1]) {
-            case '+':
-                resultAsNumber = addition(resultAsNumber, firstNumber);
-                break;
-            case '-':
-                resultAsNumber = substraction(resultAsNumber, firstNumber);
-                break;
-            case '/':
-                resultAsNumber = division(resultAsNumber, firstNumber);
-                break;
-            case '*':
-                resultAsNumber = multiplication(resultAsNumber, firstNumber);
-                break;
-        }
-    }
-    result = +resultAsNumber;
+    let result = homemadeEval();
     // Make the result have only 2 decimals and convert it to 
     // string
     result = "" + ((Math.round(result * 100) / 100).toFixed(2));
@@ -119,7 +93,7 @@ document.body.addEventListener("keyup", event => {
     // than the screen width
     if (resultTextElement.textContent.length >= 16) {
         alert("Largest operation is 16 characters long!");
-        resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
+        resultTextElement.textContent = resultTextElement.textContent.slice(0, -2);
     }
     // Check if the input is a number or if it is included
     // in the allowed inputs
@@ -165,21 +139,22 @@ document.body.addEventListener("keyup", event => {
         }
     }
 });
-
+// Function for the floating point, to check if the last number 
+// already has a floating point
 function floatPointFunction() {
     if (resultTextElement.textContent == "" || checkEnding()) {
         let inputArray = resultTextElement.textContent.split("");
         inputArray.splice(inputArray.length, 0, "0");
         resultTextElement.textContent = inputArray.join("");
     }
-    let numberArray = resultTextElement.textContent.split(/[+,-,*,/]/);
+    let numberArray = resultTextElement.textContent.split(/[+,\-,*,/]/);
     let lastNumberString = numberArray[numberArray.length - 1];
     if (lastNumberString.includes("."))
         alert("There is no such number! Please correct it!");
     else
         resultTextElement.textContent += ".";
 }
-
+// Function to check if the string on screen ends with one of the operators
 function checkEnding() {
     if (resultTextElement.textContent.endsWith("/") ||
         resultTextElement.textContent.endsWith("-") ||
@@ -188,7 +163,7 @@ function checkEnding() {
         return true;
     return false;
 }
-
+// Function to check if we can 'send' the input
 function equalButtonFunction() {
     let checkZeroPosition;
     let ok = 1;
@@ -204,15 +179,58 @@ function equalButtonFunction() {
     else if (checkEnding())
         alert("You still have one operation left");
     else {
-        resultTextElement.textContent = calculate();
+        resultTextElement.textContent = calculate(resultTextElement.textContent);
     }
 }
-
+// Function to delete the last input
 function backspaceButtonFunction() {
     resultTextElement.textContent = resultTextElement.textContent.slice(0, -1);
 }
-
+// Function to clear the calculator screen (and console)
 function clearButtonFunction() {
     resultTextElement.textContent = '';
     console.clear();
+}
+// The 'homemade' eval function (This is the part that was needed to be corrected)
+function homemadeEval(){
+    let result;
+    let i = 0;
+    // Spliting the input string in 2 other strings:
+    // One for the numbers (with floating point also)
+    // And one for the operators
+    let numbersString = resultTextElement.textContent.split(/[+,\-,/,*]/);
+    let operatorString = resultTextElement.textContent.replace(/[0-9,.]/g, '');
+    let operatorArray = operatorString.split('');
+    // Checking the order of the operators and inserting the result into the 
+    // numbers array and also deleting the operator just used
+    for (i = 0; i < numbersString.length; i++) {
+        if (operatorArray[i] == '*') {
+            result = multiplication(numbersString[i], numbersString[i + 1]);
+            operatorArray.splice(i, 1);
+            numbersString.splice(i, 2, "" + result);
+            i--;
+        }
+        else if (operatorArray[i] == '/') {
+            result = division(numbersString[i], numbersString[i + 1]);
+            operatorArray.splice(i, 1);
+            numbersString.splice(i, 2, "" + result);
+            i--;
+        }
+    }
+    if (i == numbersString.length)
+        for (i = 0; i < numbersString.length; i++) {
+            if (operatorArray[i] == '+') {
+                result = addition(+numbersString[i], +numbersString[i + 1]);
+                operatorArray.splice(i, 1);
+                numbersString.splice(i, 2, "" + result);
+                i--;
+            }
+            else if (operatorArray[i] == '\-') {
+                result = substraction(+numbersString[i], +numbersString[i + 1]);
+                operatorArray.splice(i, 1);
+                numbersString.splice(i, 2, "" + result);
+                i--;
+            }
+        }
+        return result;
 }
